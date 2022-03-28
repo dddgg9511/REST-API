@@ -20,5 +20,8 @@ public class EventValidator {
 
         //Todo BeginEventDateTime
         //Todo CloseEnrollmentDateTime
+        if(eventDto.getCloseEnrollemntDateTime().isBefore(eventDto.getBeginEnrollmentDateTime())){
+            errors.rejectValue("closeEnrollmentDateTime", "wrongValue", "closeEnrollmentDateTime is wrong");
+        }
     }
 }
