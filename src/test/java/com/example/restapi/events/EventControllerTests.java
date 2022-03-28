@@ -57,7 +57,7 @@ public class EventControllerTests {
                 .andExpect(header().exists(HttpHeaders.LOCATION))
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
                 .andExpect(jsonPath("free").value(false))
-                .andExpect(jsonPath("offline").value(true))
+                .andExpect(jsonPath("offline").value(false))
                 .andExpect(jsonPath("eventStatus").value(Matchers.is(EventStatus.DRAFT.toString())));
     }
 
