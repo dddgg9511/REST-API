@@ -18,7 +18,7 @@ public class Event {
 
     private LocalDateTime beginEnrollmentDateTime;
 
-    private LocalDateTime closeEnrollemntDateTime;
+    private LocalDateTime closeEnrollmentDateTime;
 
     private LocalDateTime beginEventDateTime;
 

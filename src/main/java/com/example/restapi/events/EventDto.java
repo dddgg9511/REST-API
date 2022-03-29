@@ -20,7 +20,7 @@ public class EventDto {
     @NotNull
     private LocalDateTime beginEnrollmentDateTime;
     @NotNull
-    private LocalDateTime closeEnrollemntDateTime;
+    private LocalDateTime closeEnrollmentDateTime;
     @NotNull
     private LocalDateTime beginEventDateTime;
     @NotNull

@@ -14,14 +14,14 @@ public class EventValidator {
         }
 
         if(eventDto.getEndEventDateTime().isBefore(eventDto.getBeginEventDateTime()) ||
-        eventDto.getEndEventDateTime().isBefore(eventDto.getCloseEnrollemntDateTime()) ||
+        eventDto.getEndEventDateTime().isBefore(eventDto.getCloseEnrollmentDateTime()) ||
         eventDto.getEndEventDateTime().isBefore(eventDto.getBeginEnrollmentDateTime())){
             errors.rejectValue("endEventDateTime", "wrongValue", "endEventDateTime is wrong");
         }
 
         //Todo BeginEventDateTime
         //Todo CloseEnrollmentDateTime
-        if(eventDto.getCloseEnrollemntDateTime().isBefore(eventDto.getBeginEnrollmentDateTime())){
+        if(eventDto.getCloseEnrollmentDateTime().isBefore(eventDto.getBeginEnrollmentDateTime())){
             errors.rejectValue("closeEnrollmentDateTime", "wrongValue", "closeEnrollmentDateTime is wrong");
         }
     }
