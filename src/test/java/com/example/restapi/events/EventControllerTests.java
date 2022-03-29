@@ -68,12 +68,14 @@ public class EventControllerTests {
                 .andExpect(jsonPath("_links.self").exists())
                 .andExpect(jsonPath("_links.query-events").exists())
                 .andExpect(jsonPath("_links.update-event").exists())
+                .andExpect(jsonPath("_links.profile").exists())
                 .andDo(document(
                         "create-event",
                         links(halLinks(),
                                 linkWithRel("self").description("Link to the self"),
                                 linkWithRel("query-events").description("Link to query events"),
-                                linkWithRel("update-event").description("Link to update")
+                                linkWithRel("update-event").description("Link to update an existing event"),
+                                linkWithRel("profile").description("link")
                         ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("accept header"),
@@ -112,7 +114,8 @@ public class EventControllerTests {
                                 fieldWithPath("eventStatus").description("event status"),
                                 fieldWithPath("_links.self.href").description("link to selt"),
                                 fieldWithPath("_links.query-events.href").description("Link to query events"),
-                                fieldWithPath("_links.update-event.href").description("link to update event")
+                                fieldWithPath("_links.update-event.href").description("link to update event"),
+                                fieldWithPath("_links.profile.href").description("link to update event")
                         )
                 ));
     }
