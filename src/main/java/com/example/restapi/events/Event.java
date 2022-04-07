@@ -1,5 +1,6 @@
 package com.example.restapi.events;
 
+import com.example.restapi.accounts.Accounts;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,6 +39,9 @@ public class Event {
 
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;
+
+    @ManyToOne
+    private Accounts manager;
 
     public void update() {
         if(this.basePrice == 0 && this.maxPrice == 0){
