@@ -1,5 +1,6 @@
 package com.example.restapi.events;
 
+import com.example.restapi.common.BaseControllerTest;
 import com.example.restapi.common.RestDocsConfiguration;
 import com.example.restapi.common.TestDescription;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,24 +29,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs
-@Import(RestDocsConfiguration.class)
-@ActiveProfiles("test")
-public class EventControllerTests {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
+public class EventControllerTests extends BaseControllerTest {
     @Autowired
     EventRepository eventRepository;
-
-    @Autowired
-    ModelMapper modelMapper;
 
     @Test
     @TestDescription("정상적으로 이벤트를 생성하는 테스트")
