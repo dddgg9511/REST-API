@@ -14,6 +14,8 @@ public class Accounts {
 
     private String email;
 
+    private String password;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<AccountRole> roles;
