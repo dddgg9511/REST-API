@@ -23,8 +23,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -243,5 +242,42 @@ public class EventControllerTests {
                 .description("test event")
                 .build();
         return this.eventRepository.save(event);
+    }
+
+    @Test
+    @TestDescription("이벤트 수정하기")
+    public void updateEvent() throws Exception{
+        //given
+        Event event = generateEvent(1);
+
+        EventDto eventDto = EventDto.builder()
+                .name("Spring")
+                .description("REST API Development with Spring")
+                .beginEnrollmentDateTime(LocalDateTime.of(2022,3,25,12,31))
+                .closeEnrollmentDateTime(LocalDateTime.of(2022,3,26,12,32))
+                .beginEventDateTime(LocalDateTime.of(2022,3,27,12,32))
+                .endEventDateTime(LocalDateTime.of(2022,3,26,12,32))
+                .basePrice(10000)
+                .maxPrice(200)
+                .limitOfEnrollment(100)
+                .location("Obiz Tower")
+                .build();
+
+        this.mockMvc.perform(patch("/api/events{id}",event.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaTypes.HAL_JSON)
+                        .content(objectMapper.writeValueAsString(eventDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(Matchers.is(event.getId())))
+                .andExpect(header().exists(HttpHeaders.LOCATION))
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
+                .andExpect(jsonPath("free").value(false))
+                .andExpect(jsonPath("offline").value(true))
+                .andExpect(jsonPath("eventStatus").value(Matchers.is(EventStatus.DRAFT.toString())))
+                .andExpect(jsonPath("_links.self").exists())
+                .andExpect(jsonPath("_links.query-events").exists())
+                .andExpect(jsonPath("_links.update-event").exists())
+                .andExpect(jsonPath("_links.profile").exists());
     }
 }
