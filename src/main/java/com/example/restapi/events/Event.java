@@ -54,19 +54,4 @@ public class Event {
             this.offline = false;
         }
     }
-
-    public void updateEvent(EventDto eventDto){
-        this.name = eventDto.getName();
-        this.description = eventDto.getDescription();
-        this.beginEnrollmentDateTime = eventDto.getBeginEnrollmentDateTime();
-        this.closeEnrollmentDateTime = eventDto.getCloseEnrollmentDateTime();
-        this.beginEventDateTime = eventDto.getBeginEventDateTime();
-        this.endEventDateTime = eventDto.getEndEventDateTime();
-        this.location = eventDto.getLocation();
-        this.basePrice = eventDto.getBasePrice();
-        this.maxPrice = maxPrice;
-        this.limitOfEnrollment = eventDto.getLimitOfEnrollment();
-
-        this.update();
-    }
 }

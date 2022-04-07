@@ -82,10 +82,13 @@ public class EventController {
         return ResponseEntity.ok(eventResource);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateEvent(@PathVariable Integer id,
                                       @Valid @RequestBody EventDto eventDto,
                                       Errors errors){
+        Optional<Event> optionalEvent = this.eventRepository.findById(id);
+        if(optionalEvent.isEmpty())
+            return ResponseEntity.notFound().build();
         if(errors.hasErrors()){
             return badRequest(errors);
         }
@@ -95,22 +98,14 @@ public class EventController {
             return badRequest(errors);
         }
 
-        Optional<Event> optionalEvent = this.eventRepository.findById(id);
-        if(optionalEvent.isEmpty())
-            return ResponseEntity.notFound().build();
-
         Event event = optionalEvent.get();
 
-        event.updateEvent(eventDto);
-
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(EventController.class).slash(event.getId());
-        URI createUri = selfLinkBuilder.toUri();
+        this.modelMapper.map(eventDto, event);
+        Event savedEvent = this.eventRepository.save(event);
 
         EventResource eventResource = new EventResource(event);
-        eventResource.add(linkTo(EventController.class).withRel("query-events"));
-        eventResource.add(selfLinkBuilder.withRel("update-event"));
-        eventResource.add(Link.of("/docs/index.html#resources-events-create").withRel("profile"));
-        return ResponseEntity.ok().body(eventResource);
+        eventResource.add(Link.of("/docs/index.html#resources-events-update").withRel("profile"));
+        return ResponseEntity.ok(eventResource);
     }
 
     private ResponseEntity<ErrorResource> badRequest(Errors errors) {
